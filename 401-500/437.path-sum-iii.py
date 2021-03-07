@@ -24,7 +24,7 @@ class Solution:
             return
         
         cur += node.val
-        self.cnt += 1 if cur == self.target else 0
+        self.cnt += cur == self.target
         self.cnt += self.found[cur - self.target]
 
         self.found[cur] += 1
