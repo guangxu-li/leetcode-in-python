@@ -29,7 +29,7 @@ class Solution:
 
             if not cnt:
                 angrams.append(lo)
-        
+
         return angrams
 
 
