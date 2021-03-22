@@ -5,8 +5,8 @@
 #
 
 # @lc code=start
-# from functools import lru_cache, reduce
-# from typing import List, Tuple
+from functools import lru_cache
+from typing import List, Tuple
 
 
 class Solution:
