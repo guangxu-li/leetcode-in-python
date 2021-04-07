@@ -7,6 +7,7 @@
 # @lc code=start
 from collections import defaultdict
 from itertools import product
+from functools import reduce
 
 
 class Solution:
@@ -14,13 +15,10 @@ class Solution:
 
     def findWords(self, board: list[list[str]], words: list[str]) -> list[str]:
         Trie = lambda: defaultdict(Trie)
-        root = defaultdict(Trie)
+        root = Trie()
 
         for word in words:
-            node = root
-            for w in word:
-                node = node[w]
-            node["END"] = word
+            reduce(dict.__getitem__, word, root)["END"] = word
 
         def search(node: defaultdict[str, defaultdict], i: int, j: int):
             if "END" in node:

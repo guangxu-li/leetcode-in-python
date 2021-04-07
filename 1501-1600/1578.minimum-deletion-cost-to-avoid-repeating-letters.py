@@ -1,12 +1,12 @@
 #
 # @lc app=leetcode id=1578 lang=python3
 #
-# [1578] Remove Palindromic Subsequences
+# [1578] Minimum Deletion Cost to Avoid Repeating Letters
 #
 
 # @lc code=start
 class Solution:
-    def minCost(self, s: str, cost: List[int]) -> int:
+    def minCost(self, s: str, cost: list[int]) -> int:
         hi, anchor, total_cost, _max, _cost = 0, s[0], 0, 0, 0
 
         while hi < len(s):
