@@ -18,4 +18,3 @@ class Solution:
         
         return _max
 # @lc code=end
-

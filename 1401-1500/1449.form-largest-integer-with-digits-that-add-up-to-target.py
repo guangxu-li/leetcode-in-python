@@ -6,7 +6,6 @@
 
 # @lc code=start
 class Solution:
-
     def largestNumber(self, cost: list[int], target: int) -> str:
         dp = [0] + [-1] * target
         for i in range(1, target + 1):
@@ -15,5 +14,6 @@ class Solution:
                     dp[i] = max(dp[i], dp[i - c] * 10 + j + 1)
 
         return str(max(0, dp[target]))
+
 
 # @lc code=end
