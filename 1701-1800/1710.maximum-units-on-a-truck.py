@@ -9,7 +9,7 @@ import heapq
 
 
 class Solution:
-    def maximumUnits(self, boxTypes: list[list[int]], truckSize: int) -> int:
+    def maximumUnits(self, boxTypes: list, truckSize: int) -> int:
         boxes = [(-units, i, n) for i, (n, units) in enumerate(boxTypes)]
         heapq.heapify(boxes)
         cnt = 0
@@ -23,4 +23,3 @@ class Solution:
 
         return cnt
 # @lc code=end
-

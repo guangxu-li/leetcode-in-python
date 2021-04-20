@@ -9,18 +9,15 @@ from collections import deque
 
 
 class Solution:
-    def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-        decrement = deque()
-        higher = [0] * n
+    def nextGreaterElements(self, nums: list[int]) -> list[int]:
+        stack, output = deque(), [-1] * len(nums)
 
-        for i in range(2 * n - 1, -1, -1):
-            i = i % n
-            while decrement and nums[i] >= decrement[-1]:
-                decrement.pop()
-            higher[i] = decrement[-1] if decrement else -1
-            decrement.append(nums[i])
-        
-        return higher    
+        for i, num in enumerate(nums * 2):
+            while stack and nums[stack[-1]] < num:
+                output[stack.pop()] = num
+            stack.append(i % len(nums))
+
+        return output
+
+
 # @lc code=end
-
