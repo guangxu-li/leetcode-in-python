@@ -5,8 +5,9 @@
 #
 
 # @lc code=start
+
+
 from collections import defaultdict
-from typing import List
 
 
 class Excel:
@@ -29,7 +30,7 @@ class Excel:
             else cell["val"]
         )
 
-    def sum(self, r: int, c: str, strs: List[str]) -> int:
+    def sum(self, r: int, c: str, strs: list[str]) -> int:
         _r, _c = r - 1, ord(c) - ord("A")
         counter = defaultdict(int)
         for s in strs:
@@ -41,6 +42,8 @@ class Excel:
 
         self.cells[_r][_c]["formula"] = counter
         return self.get(r, c)
+
+
 # Your Excel object will be instantiated and called as such:
 # obj = Excel(H, W)
 # obj.set(r,c,v)
