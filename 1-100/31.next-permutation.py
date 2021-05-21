@@ -29,4 +29,3 @@ class Solution:
             for j, num in enumerate(tail):
                 nums[i + j + 1] = num
 # @lc code=end
-

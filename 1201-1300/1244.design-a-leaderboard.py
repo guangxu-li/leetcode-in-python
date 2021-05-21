@@ -17,7 +17,7 @@ class Leaderboard:
     def addScore(self, playerId: int, score: int) -> None:
         self.players[playerId] += score
     
-    def __partition(self, scores: List[int], lo: int, hi: int, pivot: int) -> int:
+    def __partition(self, scores: list[int], lo: int, hi: int, pivot: int) -> int:
         pivot_val = scores[pivot]
         scores[pivot], scores[hi] = scores[hi], scores[pivot]
         
@@ -31,7 +31,7 @@ class Leaderboard:
 
         return j
         
-    def __quickselect(self, scores: List[int], lo: int, hi: int, k: int) -> None:
+    def __quickselect(self, scores: list[int], lo: int, hi: int, k: int) -> None:
         if lo == hi:
             return
         
@@ -59,4 +59,3 @@ class Leaderboard:
 # param_2 = obj.top(K)
 # obj.reset(playerId)
 # @lc code=end
-
