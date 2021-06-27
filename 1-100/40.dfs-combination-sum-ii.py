@@ -6,7 +6,7 @@
 
 # @lc code=start
 class Solution:
-    def comb(self, pos: int, rem: int) -> list[list[int]]:
+    def comb(self, pos: int, rem: int) -> list:
         if rem == 0:
             return [[]]
         if pos == len(self.cands):
@@ -24,7 +24,7 @@ class Solution:
         
         return output
 
-    def combinationSum2(self, candidates: list[int], target: int) -> list[list[int]]:
+    def combinationSum2(self, candidates: list, target: int) -> list:
         self.cands = [i for i in sorted(candidates) if i <= target]
 
         return self.comb(0, target)
