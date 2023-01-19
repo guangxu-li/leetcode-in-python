@@ -7,13 +7,18 @@
 # @lc code=start
 from collections import Counter
 from itertools import accumulate
+from typing import List
 
 
 class Solution:
-    def subarraySum(self, nums: list[int], k: int) -> int:
-        return (lambda c: sum((c[v - k], c.update({v: 1}))[0] for v in accumulate(nums)))(
-            Counter({0: 1})
-        )
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        counter = Counter()
+        cnt = 0
+        for _sum in accumulate(nums, initial=0):
+            cnt += counter[_sum - k]
+            counter[_sum] += 1
+
+        return cnt
 
 
 # @lc code=end
