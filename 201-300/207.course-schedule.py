@@ -5,24 +5,25 @@
 #
 
 # @lc code=start
-from collections import defaultdict
-from collections import deque
+from collections import defaultdict, deque
 
 
 class Solution:
     def canFinish(self, n: int, prerequisites: list[list[int]]) -> bool:
-        parent = defaultdict(set)
-        out_degrees = [0] * n
+        graph = defaultdict(set)
+        in_degrees = [0] * n
         for a, b in prerequisites:
-            parent[b].add(a)
-            out_degrees[a] += 1
+            graph[b].add(a)
+            in_degrees[a] += 1
 
-        available = deque([i for i in range(n) if not out_degrees[i]]) 
-        while available:
-            for nxt in parent.pop(available.popleft(), set()):
-                out_degrees[nxt] -= 1
-                if not out_degrees[nxt]:
-                    available.append(nxt)
-             
-        return not parent
+        q = deque([i for i in range(n) if in_degrees[i] == 0])
+        while q:
+            cur = q.popleft()
+            adjs = graph.pop(cur)
+            for nxt in adjs:
+                in_degrees[nxt] -= 1
+                if in_degrees[nxt] == 0:
+                    q.append(nxt)
+
+        return not graph
 # @lc code=end
