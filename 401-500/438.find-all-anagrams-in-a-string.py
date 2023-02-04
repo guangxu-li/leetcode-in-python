@@ -9,28 +9,20 @@ from collections import Counter
 
 
 class Solution:
-    def findAnagrams(self, s: str, p: str) -> List[int]:
-        angrams = []
-        counter = Counter(p)
+    def findAnagrams(self, s: str, p: str) -> list[int]:
+        target = Counter(p)
+        cur = Counter()
+        output = []
 
-        lo, hi = 0, 0
-        cnt = len(p)
-        while hi < len(s):
-            if hi - lo == len(p):
-                if counter[s[lo]] >= 0:
-                    cnt += 1
-                counter[s[lo]] += 1
-                lo += 1
+        for i in range(len(s)):
+            cur[s[i]] += 1
+            if i >= len(p):
+                cur[s[i - len(p)]] -= 1
 
-            if counter[s[hi]] >= 1:
-                cnt -= 1
-            counter[s[hi]] -= 1
-            hi += 1
+            if cur == target:
+                output.append(i - len(p) + 1)
 
-            if not cnt:
-                angrams.append(lo)
-
-        return angrams
+        return output
 
 
 # @lc code=end
