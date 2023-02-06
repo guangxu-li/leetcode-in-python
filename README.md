@@ -2,7 +2,7 @@
 
 This repository aims to record leetcode solutions, which only contains source code.
 
-For solutions' thoughts, please refer to https://wiki.guangxuli.com/computer-science/leetcode
+For solutions' thoughts, please refer to https://guangxuli.wiki/#/page/leetcode
 
 For solution in other program language, please refer to:
 
