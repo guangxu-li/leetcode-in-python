@@ -8,6 +8,15 @@
 from collections import Counter
 
 
+# Build the counter.
+# Build the num * counter[num] sorted dicts `earns``.
+#
+# Then this problems becomes similar to the house robber problem.
+#
+# dp[i] means the max earn of the subproblem earns[:i].
+# dp[i]:
+#   - nums[i - 1] + 1 = nums[i]: max(dp[i - 1], earn[i] + dp[i - 2])
+#   - nums[i - 1] + 1 <  nums[i]: cur + dp[i - 1]
 class Solution:
     def deleteAndEarn(self, nums: list[int]) -> int:
         counter = dict((k, k * v) for k, v in Counter(nums).items())

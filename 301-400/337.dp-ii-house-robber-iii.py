@@ -19,16 +19,16 @@ class Solution:
         memo = dict({None: [0, 0]})
         nodes = deque()
         node = root
-        
+
         while nodes or node:
             while node:
                 if node.right:
                     nodes.append(node.right)
                 nodes.append(node)
                 node = node.left
-            
+
             node = nodes.pop()
-            
+
             if nodes and node.right == nodes[-1]:
                 nodes.pop()
                 nodes.append(node)
@@ -39,7 +39,7 @@ class Solution:
 
                 memo[node] = [max(left) + max(right), node.val + left[0] + right[0]]
                 node = None
-        
+
         return max(memo[root])
 
 

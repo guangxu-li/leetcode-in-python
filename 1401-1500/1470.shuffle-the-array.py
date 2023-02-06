@@ -5,12 +5,22 @@
 #
 
 # @lc code=start
-from itertools import chain
+from typing import List
 
 
+# 1 <= nums[i] <= 10^3 < (1 << 10 - 1)
+#
+# We can combine nums[i] and nums[i + n] together as
+# nums[i] << 10 + nums[i + n]
 class Solution:
-    def shuffle(self, nums: list[int], n: int) -> list[int]:
-        return list(chain.from_iterable(zip(nums[:n], nums[n:])))
+    def shuffle(self, nums: List[int], n: int) -> List[int]:
+        nums = [(nums[i] << 10) + nums[i + n] for i in range(n)] + [0] * n
+        for i in reversed(range(n)):
+            num = nums[i]
+            nums[i * 2] = num >> 10
+            nums[i * 2 + 1] = num & ((1 << 10) - 1)
+
+        return nums
 
 
 # @lc code=end

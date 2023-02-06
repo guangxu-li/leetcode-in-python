@@ -12,7 +12,7 @@
 #         self.left = left
 #         self.right = right
 # from TreeNode import TreeNode
-from typing import List  
+from typing import List
 
 
 class Solution:

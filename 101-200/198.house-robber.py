@@ -5,17 +5,16 @@
 #
 
 # @lc code=start
+# dp[i] means the result of subproblem nums[:i]
+#
+# dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])
 class Solution:
     def rob(self, nums: list[int]) -> int:
-        n = len(nums)
-        # dp = [0] * (n + 2)
-        # for i in reversed(range(n)):
-        #     dp[i] = max(nums[i] + dp[i + 2], dp[i + 1])
-        # return dp[0]
-
         prev = cur = 0
-        for i in range(n):
-            prev, cur = cur, max(nums[i] + prev, cur)
-        return cur
-# @lc code=end
+        for num in nums:
+            prev, cur = cur, max(num + prev, cur)
 
+        return cur
+
+
+# @lc code=end
