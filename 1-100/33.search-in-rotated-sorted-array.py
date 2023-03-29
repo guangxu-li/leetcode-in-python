@@ -5,20 +5,36 @@
 #
 
 # @lc code=start
+from typing import List
+
+
 class Solution:
-    def search(self, nums: list[int], target: int) -> int:
+    def search(self, nums: List[int], target: int) -> int:
         lo, hi = 0, len(nums) - 1
+
         while lo <= hi:
             mid = (lo + hi) >> 1
-            if target >= nums[0] and nums[mid] < nums[0]:
-                hi = mid - 1
-            elif target < nums[0] and nums[mid] >= nums[0]:
-                lo = mid + 1
-            elif nums[mid] <= target:
-                lo = mid + 1
-            else:
-                hi = mid - 1
-        
-        return hi if nums[hi] == target else -1
-# @lc code=end
+            num = nums[mid]
 
+            if num == target:
+                return mid
+
+            # left part: nums[0] <= target
+            # right part: nums[-1] >= target
+            if nums[0] <= target:
+                if num < nums[0]:
+                    hi = mid - 1
+                elif num > target:
+                    hi = mid - 1
+                else:
+                    lo = mid + 1
+            else:
+                if num >= nums[0]:
+                    lo = mid + 1
+                elif num < target:
+                    lo = mid + 1
+                else:
+                    hi = mid - 1
+
+        return -1
+# @lc code=end
