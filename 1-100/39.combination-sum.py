@@ -11,10 +11,10 @@ from itertools import product
 
 class Solution:
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
-        dp = defaultdict(set, {0: set({()})})
-        for i, c in product(range(1, target + 1), candidates):
-            for prev in dp[i - c]:
-                dp[i].add(tuple(sorted(prev + (c,))))
+        dp = defaultdict(set, {0: {()}})
+        for t, cand in product(range(1, target + 1), candidates):
+            for comb in dp[t - cand]:
+                dp[t].add(tuple(sorted(comb + (cand,))))
 
         return dp[target]
 

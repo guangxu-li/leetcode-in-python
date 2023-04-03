@@ -29,7 +29,6 @@ class Solution:
                 tmp = nums.pop() * nums.pop()
                 nums[-1] += tmp
                 cur, sign = 0, 1
-        
+
         return nums.pop() + cur * sign
 # @lc code=end
-
