@@ -5,14 +5,12 @@
 #
 
 # @lc code=start
-from collections import defaultdict
+from itertools import groupby
 
 
 class Solution:
     def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
-        anagrams = defaultdict(list)
-        for s in strs:
-            anagrams[tuple(sorted(s))].append(s)
-        
-        return anagrams.values()
+        return [list(g) for _, g in groupby(sorted(strs, key=sorted), sorted)]
+
+
 # @lc code=end

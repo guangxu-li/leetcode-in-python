@@ -5,11 +5,16 @@
 #
 
 # @lc code=start
-from itertools import groupby
+from collections import Counter, defaultdict
 
 
 class Solution:
     def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
-        return [list(g) for _, g in groupby(sorted(strs, key=sorted), sorted)]
-# @lc code=end
+        anagrams = defaultdict(list)
+        for s in strs:
+            anagrams[frozenset(Counter(s).items())].append(s)
 
+        return list(anagrams.values())
+
+
+# @lc code=end
