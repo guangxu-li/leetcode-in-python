@@ -11,45 +11,36 @@ from typing import List
 
 
 class Solution:
-    def quickselect(self, vals, lo, hi, k):
-        if lo == hi:
-            return lo
+    def quickpartition(self, nums: List[int], i: int, j: int) -> None:
+        p = randint(i, j)
+        nums[p], nums[j] = nums[j], nums[p]
 
-        p = self.partition(vals, lo, hi)
-        if p == k:
-            return p
-        elif p < k:
-            self.quickselect(vals, p + 1, hi, k)
-        else:
-            self.quickselect(vals, lo, p - 1, k)
+        for k in range(i, j):
+            if nums[k] < nums[j]:
+                nums[i], nums[k] = nums[k], nums[i]
+                i += 1
 
-    def partition(self, vals, lo, hi):
-        p = randint(lo, hi - 1)
-        pivot = self.freq[vals[p]]
+        nums[i], nums[j] = nums[j], nums[i]
+        return i
 
-        self.swap(vals, p, hi)
+    def quickselect(self, nums: List[int], i: int, j: int, k: int) -> int:
+        while i <= j:
+            p = self.quickpartition(nums, i, j)
+            if p == k:
+                return p
+            elif p < k:
+                i = p + 1
+            else:
+                j = p - 1
 
-        j = lo
-        for i in range(lo, hi):
-            cur = self.freq[vals[i]]
-            if cur > pivot:
-                self.swap(vals, i, j)
-                j += 1
-
-        self.swap(vals, j, hi)
-
-        return j
-
-    def swap(self, vals, i, j):
-        vals[i], vals[j] = vals[j], vals[i]
+        return i
 
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        self.freq = Counter(nums)
-        vals = list(self.freq.keys())
+        counter = Counter(nums)
+        arr = [(-freq, num) for num, freq in counter.items()]
 
-        self.quickselect(vals, 0, len(vals) - 1, k - 1)
-
-        return vals[:k]
+        p = self.quickselect(arr, 0, len(arr) - 1, k)
+        return [num for (_, num) in arr[:p]]
 
 
 # @lc code=end
