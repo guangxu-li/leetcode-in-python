@@ -1,11 +1,10 @@
 #
-# @lc app=leetcode id=121 lang=python3
+# @lc app=leetcode id=123 lang=python3
 #
-# [121] Best Time to Buy and Sell Stock
+# [123] Best Time to Buy and Sell Stock III
 #
 
 # @lc code=start
-import math
 from typing import List
 
 
@@ -19,11 +18,12 @@ class Solution:
         #   dp[i][cash][k] = max(dp[i+1][cash][k], dp[i+1][held][k]     - price)
         #   dp[i][held][k] = max(dp[i+1][held][k], dp[i+1][cash][k - 1] + price)
 
-        dp = [[0] * 2 for _ in range(2)]
+        dp = [[0] * 3 for _ in range(2)]
         for price in reversed(prices):
-            dp[0][1] = max(dp[0][1], dp[1][1] - price)
-            dp[1][1] = max(dp[1][1], dp[0][0] + price)
-        return dp[0][1]
+            for k in range(1, 3):
+                dp[0][k] = max(dp[0][k], dp[1][k] - price)
+                dp[1][k] = max(dp[1][k], dp[0][k - 1] + price)
+        return dp[0][2]
 
 
 # @lc code=end

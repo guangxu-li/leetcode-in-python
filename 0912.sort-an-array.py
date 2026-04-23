@@ -55,13 +55,12 @@ class Solution:
                 stack.append((mid + 1, j, False))
 
         def merge_sort_iterative_2(nums: List[int]):
-            n, tmp, size = len(nums), [0] * len(nums), 1
+            n, size = len(nums), 1
             while size < n:
-                for i in range(0, n, 2 * size):
+                for i in range(0, n, size * 2):
                     mid = min(i + size - 1, n - 1)
                     j = min(i + size * 2 - 1, n - 1)
                     merge(nums, i, mid, j)
-
                 size *= 2
 
         # merge_sort_iterative_1(nums)
@@ -148,7 +147,7 @@ class Solution:
                 i = j
 
         n = len(nums)
-        for i in reversed(range((n + 1) // 2)):
+        for i in reversed(range(n // 2)):
             heapify(nums, n, i)
 
         for i in reversed(range(n)):

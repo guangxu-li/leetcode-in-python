@@ -5,19 +5,15 @@
 #
 
 # @lc code=start
+from typing import List
+
+
 class Solution:
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
-        for i, num in enumerate(nums):
-            ni = abs(num) - 1
-            nums[ni] = -abs(nums[ni])
-        
-        missing = []
-        for i, num in enumerate(nums):
-            if num > 0:
-                missing.append(i + 1)
+        for num in nums:
+            nums[abs(num) - 1] = -abs(nums[abs(num) - 1])
 
-            nums[i] = abs(num)
-        
-        return missing
+        return [i + 1 for i in range(len(nums)) if nums[i] > 0]
+
+
 # @lc code=end
-

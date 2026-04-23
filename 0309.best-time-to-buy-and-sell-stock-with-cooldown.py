@@ -5,15 +5,40 @@
 #
 
 # @lc code=start
-class Solution:
-    def maxProfit(self, prices: list[int]) -> int:
-        reset, held, sold = 0, float('-inf'), float('-inf')
-        for price in prices:
-            prev_reset = reset
-            reset = max(reset, sold)
-            sold = held + price
-            held = max(held, prev_reset - price)
-        
-        return max(reset, held, sold)
-# @lc code=end
+from typing import List
 
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        # reset:    ready to buy
+        # held:     bought and ready to sell
+        # cooldown: sold and cooldown
+        #
+        # current stage -> possible next state
+        #   reset     -> reset, held
+        #   held      -> held,  cooldown
+        #   cooldown  -> reset
+        #
+        # define dp[i][state] as max profit of prices[i:] staring with the state
+        #   dp[i][reset]   :      max(dp[i+1][reset], dp[i+1][held]     - price[i])
+        #   dp[i][held]    :      max(dp[i+1][held],  dp[i+1][cooldown] + price[i])
+        #   dp[i][cooldown]:      dp[i+1][reset]
+        #
+        # scan from left to right version
+        # define dp[i][state] as max profit of prices[:i+1] ending with the state
+        #   dp[i][reset]   :      max(dp[i-1][reset], dp[i-1][cooldown])
+        #   dp[i][held]    :      max(dp[i-1][held],  dp[i-1][reset] - prices[i])
+        #   dp[i][cooldown]:      dp[i-1][held] + prices[i]
+
+        reset = held = cooldown = 0
+        for price in reversed(prices):
+            reset, held, cooldown = max(reset, held - price), max(held, cooldown + price), reset
+        return reset
+
+        # reset, held, cooldown = 0, -math.inf, -math.inf
+        # for price in prices:
+        #     reset, held, cooldown = max(reset, cooldown), max(held, reset - price), held + price
+        # return max(reset, held, cooldown)
+
+
+# @lc code=end
