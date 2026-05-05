@@ -15,7 +15,7 @@ find "$ROOT" -type f -name "*.py" | while read -r filepath; do
         rest="${BASH_REMATCH[2]}"
 
         # Pad number to 4 digits
-        padded=$(printf "%04d" "$num")
+        padded=$(printf "%05d" "$num")
         new_filename="${padded}${rest}"
 
         if [[ "$filename" != "$new_filename" ]]; then
