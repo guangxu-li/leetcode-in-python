@@ -6,28 +6,26 @@
 
 # @lc code=start
 from collections import deque
-from typing import List
 
 
 class Solution:
-    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        stack = deque() # descreasing stack (storing idx)
+    def maxSlidingWindow(self, nums: list[int], k: int) -> list[int]:
+        # monotonic deque:
+        #   1. expiration: remove number out of the window
+        #   2. monotonic: if number >= old number, no need to keep old number
 
-        maxs = []
+        dq = deque() # (i, num)
+        ans = []
         for i, num in enumerate(nums):
-            # shrink the window
-            if stack and stack[0] == i - k:
-                stack.popleft()
+            while dq and dq[0] <= i - k:
+                dq.popleft()
 
-            while stack and nums[stack[-1]] <= num:
-                stack.pop()
-            stack.append(i)
+            while dq and nums[dq[-1]] <= num:
+                dq.pop()
 
-            if i>= k - 1:
-                maxs.append(nums[stack[0]])
+            dq.append(i)
+            if i >= k - 1:
+                ans.append(nums[dq[0]])
 
-        return maxs
-
-
-
+        return ans
 # @lc code=end

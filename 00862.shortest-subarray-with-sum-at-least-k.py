@@ -5,36 +5,37 @@
 #
 
 # @lc code=start
+import math
 from collections import deque
-from itertools import accumulate
 
 
 class Solution:
-    def shortestSubarray(self, A: list[int], K: int) -> int:
-        """
-        1. If cur prefix sum minus the first prefix sum in the deque >= K, the first
-           prefix sum is not needned anymore since we're trying to find the minimum
-           length subarray
+    def shortestSubarray(self, nums: list[int], k: int) -> int:
+        # convert to prefix sums and change the problem to find the optimal pair (i, j) to make prefix_sum[j] - prefix_sum[i] >= k
+        # monotonic deque
+        #   poppush:    increasing order to track "candidate minimums"
+        #   query:      find the largest "candidate minimum" that matches the constraint, and (j - i) is one answer candidate
+        #   expiration: all candidates minimum that is not larger than the query result is not useful anymore
 
-        2. For the last prefix sum (i, a) and cur prefix sum (j, b), if a >= b then a is
-           also not needed.
-           
-           Since a >= b which means if at some point prefix sum minus a >= K
-           then the prefix sum minus b also >= K, but use b will result smaller length
-           since i < j.
-        """
+        n = len(nums)
+        prefix_sum = [0] * (n + 1)
+        for i in range(1, n + 1):
+            prefix_sum[i] = prefix_sum[i - 1] + nums[i - 1]
 
-        candidates, ret = deque([(-1, 0)]), float("inf")
+        ans = math.inf
+        mins = deque() # increasing order
+        for i in range(n + 1):
+            # poppush
+            while mins and prefix_sum[mins[-1]] >= prefix_sum[i]:
+                mins.pop()
+            mins.append(i)
 
-        for i, _sum in enumerate(accumulate(A)):
-            while candidates and _sum - candidates[0][1] >= K:
-                ret = min(ret, i - candidates.popleft()[0])
-            while candidates and _sum <= candidates[-1][1]:
-                candidates.pop()
+            # query + expiration
+            while mins and prefix_sum[i] - prefix_sum[mins[0]] >= k:
+                ans = min(ans, i - mins.popleft())
 
-            candidates.append((i, _sum))
+        return ans if math.isfinite(ans) else -1
 
-        return -1 if ret == float("inf") else ret
 
 
 # @lc code=end

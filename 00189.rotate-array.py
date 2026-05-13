@@ -5,33 +5,24 @@
 #
 
 # @lc code=start
-from typing import List
-
-
 class Solution:
-    def rotate(self, nums: List[int], k: int) -> None:
+    def rotate(self, nums: list[int], k: int) -> None:
         """
         Do not return anything, modify nums in-place instead.
         """
         n = len(nums)
         k %= n
 
-        cnt = n
-        i = 0
-
-        while cnt:
-            j = (i + k) % n
-            prev = nums[i]
-            while i != j:
-                prev, nums[j] = nums[j], prev
+        i = cnt = 0
+        while cnt < n:
+            prev, j = nums[i], i
+            while True:
                 j = (j + k) % n
-                cnt -= 1
-            nums[i] = prev
-
-            cnt -= 1
+                prev, nums[j] = nums[j], prev
+                cnt += 1
+                if i == j:
+                    break
             i += 1
-
-        return
 
 
 
